@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>⚡ Smart City Power Usage Simulation</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+</head>
+<body>
+  <div id="loginScreen">
+    <h2>🔒 Login to Smart City Dashboard</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <input type="text" id="village" placeholder="Village Name" required />
+    <button onclick="login()">Login</button>
+    <div id="loginError"></div>
+  </div>
+
+  <div id="dashboard" style="display:none;">
+    <h1>⚡ Smart City Power Usage Simulation Dashboard</h1>
+    <div class="container">
+      <input type="file" id="csvFile" accept=".csv" />
+      <button id="submitBtn">Load CSV Headers</button>
+      <label for="threshold">Set High Consumption Threshold (kWh):</label>
+      <input type="number" id="threshold" value="5000" step="500" />
+
+      <div class="card" id="columnMapping">
+        <h3>Map Your CSV Columns</h3>
+        <div class="mapping-row">
+            <label for="areaColumn">Area/Location Column:</label>
+            <select id="areaColumn"></select>
+        </div>
+        <div class="mapping-row">
+            <label for="dateColumn">Date Column:</label>
+            <select id="dateColumn"></select>
+        </div>
+        <div class="mapping-row">
+            <label for="consumptionColumn">Consumption (kWh) Column:</label>
+            <select id="consumptionColumn"></select>
+        </div>
+        <button id="mapColumnsBtn">Process Data</button>
+      </div>
+      <div class="card kpi" id="kpiContainer" style="display:none;">
+        <div>
+          <h2 id="totalConsumption">0</h2>
+          <p>Total Consumption (kWh)</p>
+        </div>
+        <div>
+          <h2 id="averageConsumption">0</h2>
+          <p>Average Daily Consumption (kWh)</p>
+        </div>
+        <div>
+          <h2 id="topArea">N/A</h2>
+          <p>Top Consuming Area</p>
+        </div>
+      </div>
+
+      <div id="alertContainer"></div>
+
+      <div class="card" id="chartsContainer" style="display:none;">
+        <canvas id="barChart"></canvas>
+        <canvas id="lineChart"></canvas>
+        <canvas id="pieChart"></canvas>
+      </div>
+
+      <div class="card recommendation" id="recommendationContainer" style="display:none;">
+        <h3>🌱 Energy Saving Recommendations</h3>
+        <ul id="recommendationsList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+    })();
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
